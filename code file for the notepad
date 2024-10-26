@@ -1,0 +1,243 @@
+import 'dart:async';
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      title: 'Fading Notepad',
+      home: FadingNotepad(),
+    );
+  }
+}
+
+class FadingNotepad extends StatefulWidget {
+  const FadingNotepad({super.key});
+
+  @override
+  _FadingNotepadState createState() => _FadingNotepadState();
+}
+
+class _FadingNotepadState extends State<FadingNotepad> {
+  final _textController = TextEditingController();
+  Timer? _timer;
+  final double _fadeDelay = 3.0; // Default fade delay in seconds
+  String _displayText = ''; // Text to display
+  double _opacity = 1.0; // Opacity for fading effect
+  Color _boxColor = Colors.white.withOpacity(0.8); // Default color for the box
+
+  final List<Color> _colorOptions = [
+    Colors.red.withOpacity(0.5),
+    Colors.green.withOpacity(0.5),
+    Colors.blue.withOpacity(0.5),
+    Colors.yellow.withOpacity(0.5),
+    Colors.orange.withOpacity(0.5),
+    Colors.purple.withOpacity(0.5),
+  ];
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void _handleTextChange(String value) {
+    setState(() {
+      _displayText = value; // Update displayed text
+      _opacity = 1.0; // Reset opacity for new text
+    });
+
+    // Start fade out timer
+    _startFadeTimer();
+  }
+
+  void _startFadeTimer() {
+    _timer?.cancel(); // Cancel any existing timer
+
+    // Start the fade out process after the specified delay
+    _timer = Timer(Duration(seconds: _fadeDelay.toInt()), () {
+      setState(() {
+        _opacity = 0.0; // Start fading out the text
+      });
+
+      // Clear the displayed text after the fade out duration
+      Timer(const Duration(seconds: 3), () {
+        setState(() {
+          _displayText = ''; // Clear displayed text
+        });
+      });
+    });
+  }
+
+  void _uploadText() {
+    // Show goodbye message
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          content: const SizedBox(
+            height: 150,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Goodbye!',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'You will be taken to a new notepad.',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.normal,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            Center(
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const FadingNotepad()), // Navigate to a new instance of the same page
+                  );
+                },
+                child: const Text('OK'),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Fading Notepad'),
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          image: DecorationImage(
+            image: AssetImage(
+                'assets/notebook_background.png'), // Add a notebook background image here
+            fit: BoxFit.cover,
+          ),
+        ),
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            // Color selection dots
+            SizedBox(
+              width: 50,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: _colorOptions.map((color) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _boxColor = color; // Change the color of the box
+                      });
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: color,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+            Expanded(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Center(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width *
+                            0.8, // 80% of screen width
+                        height: MediaQuery.of(context).size.height *
+                            0.7, // 70% of screen height
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          color: _boxColor,
+                          borderRadius: BorderRadius.circular(
+                              12.0), // Curved rectangle shape
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3), // Shadow position
+                            ),
+                          ],
+                        ),
+                        child: AnimatedOpacity(
+                          opacity: _opacity,
+                          duration:
+                              const Duration(seconds: 3), // Fade out duration
+                          child: SingleChildScrollView(
+                            child: Text(
+                              _displayText,
+                              style: const TextStyle(
+                                fontSize: 24.0,
+                              ),
+                              textAlign:
+                                  TextAlign.center, // Center align the text
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  // Text input field at the bottom
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: TextField(
+                      controller: _textController,
+                      decoration: const InputDecoration(
+                        hintText: 'Type your text...',
+                      ),
+                      onChanged: _handleTextChange,
+                      maxLines: null, // Allow multiple lines
+                      keyboardType: TextInputType.multiline,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _uploadText, // Changed to a plus icon
+        tooltip: 'Upload Text',
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
