@@ -42,19 +42,15 @@ For Software:
 ### Project Documentation
 For Software:
 
-# Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+# Screenshots 
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+![ad14398d-ce37-47e5-8620-0dce2bc06690](https://github.com/user-attachments/assets/227fbdf8-1ebb-4f92-af80-5a310bbcac23)
+*This shows the notepad interface*
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+![88e6acbc-7b8f-429f-b3ab-ec0bc2d30548](https://github.com/user-attachments/assets/f317b4e0-07b9-4c00-be7e-c3414b275ba4)
 
-# Diagrams
-![Workflow](Add your workflow/architecture diagram here)
-*Add caption explaining your workflow*
+
+![6318a231-3c30-47a7-bd30-16486d027d7d](https://github.com/user-attachments/assets/39ee4ecc-f951-44c1-90de-5a4e1ac68274)
 
 For Hardware:
 
@@ -72,18 +68,16 @@ For Hardware:
 ![Build](Add photos of build process here)
 *Explain the build steps*
 
-![Final](Add photo of final product here)
-*Explain the final build*
+![Final]![251e1eb1-e895-4205-8e95-72be741a95be](https://github.com/user-attachments/assets/68a5e624-d379-45c3-86bd-800723b0dea0)
+
+*An app which fades its notes, very amusing!*
 
 ### Project Demo
 # Video
-[Add your demo video link here]
-*Explain what the video demonstrates*
+(https://drive.google.com/file/d/1RUlXA25WcAvlqjcNO5Hcy18v0Pp_yqWU/view?usp=sharing)
 
-# Additional Demos
-[Add any extra demo materials/links]
 
 ## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
+- [Ajmal P K]: [Backend]
+- [Oneela Gopi]: [User Experience]
+- [Thanseeha Nasrin]: [UI/UX Design]
