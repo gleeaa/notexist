@@ -78,6 +78,6 @@ For Hardware:
 
 
 ## Team Contributions
-- [Ajmal P K]: [Backend]
-- [Oneela Gopi]: [User Experience]
-- [Thanseeha Nasrin]: [UI/UX Design]
+- Ajmal P K: Backend
+- Oneela Gopi: User Experience
+- Thanseeha Nasrin: UI/UX Design
